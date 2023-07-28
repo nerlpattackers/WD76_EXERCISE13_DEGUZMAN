@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number and Text Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #bdc3c7;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      text-align: center;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    select, input {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input {
+      width: 200px;
+      margin-bottom: 10px;
+    }
+
+    #output {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .convert-btn {
+      display: block;
+      margin: 0 auto;
+      background-color: yellowgreen;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .convert-btn:hover {
+      background-color: #45a049;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Number and Text Converter</h1>
+    
+    <div class="input-group">
+      <label for="convertFrom">Convert from:</label>
+      <select id="convertFrom" onchange="convert()">
+        <option value="binary">Binary</option>
+        <option value="decimal">Decimal</option>
+        <option value="hexadecimal">Hexadecimal</option>
+        <option value="text">Text</option>
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <label for="convertTo">Convert to:</label>
+      <select id="convertTo" onchange="convert()">
+        <option value="binary">Binary</option>
+        <option value="decimal">Decimal</option>
+        <option value="hexadecimal">Hexadecimal</option>
+        <option value="text">Text</option>
+      </select>
+    </div>
+    
+    <div class="input-group">
+      <input type="text" id="inputValue" placeholder="Enter value">
+    </div>
+
+    <div class="result" id="output">Result: </div>
+    
+    <button class="convert-btn" onclick="convert()">Convert</button>
+  </div>
+    
+    <script>
+      function convert() {
+        const from = document.getElementById("convertFrom").value;
+        const to = document.getElementById("convertTo").value;
+        const inputValue = document.getElementById("inputValue").value;
+        let outputValue;
+  
+        if (from === "binary") {
+          outputValue = parseInt(inputValue, 2);
+        } else if (from === "decimal") {
+          outputValue = parseInt(inputValue, 10);
+        } else if (from === "hexadecimal") {
+          outputValue = parseInt(inputValue, 16);
+        } else if (from === "text") {
+          outputValue = textToDecimal(inputValue);
+        }
+  
+        if (to === "binary") {
+          outputValue = decimalToBinary(outputValue);
+        } else if (to === "decimal") {
+          outputValue = outputValue.toString(10);
+        } else if (to === "hexadecimal") {
+          outputValue = outputValue.toString(16).toUpperCase();
+        } else if (to === "text") {
+          outputValue = decimalToText(outputValue);
+        }
+  
+        document.getElementById("output").innerText = "Result: " + outputValue;
+      }
+  
+      function decimalToBinary(decimalValue) {
+        return decimalValue.toString(2);
+      }
+  
+      function decimalToText(decimalValue) {
+        return String.fromCharCode(decimalValue);
+      }
+  
+      function textToDecimal(textValue) {
+        let decimalValue = 0;
+        for (let i = 0; i < textValue.length; i++) {
+          decimalValue += textValue.charCodeAt(i) * Math.pow(256, textValue.length - 1 - i);
+        }
+        return decimalValue;
+      }
+ // Show Output button handler
+ function showOutput() {
+      convert(); // Call the convert function to update the output
+    }
+
+  </script>
+</body>
+</html>
